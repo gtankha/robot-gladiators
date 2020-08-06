@@ -24,18 +24,27 @@ var fightOrSkip = function() {
   }
   return false;
 }
+// keep track of who goes first
+
+
 
 var fight = function(enemy) {
+
+  var isPlayerTurn = true;
+if (Math.random() > 0.5) {
+  isPlayerTurn = false;
+} 
  
     while (playerInfo.health > 0 && enemy.health > 0) {
 
-     
+     if (isPlayerTurn) {
 
       // ask user if they'd liked to fight or run
       if (fightOrSkip()) {
         // if true, leave fight by breaking loop
         break; }
   
+
       // generate random damage value based on player's attack power
       var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
       enemy.health = Math.max(0, enemy.health - damage);
@@ -56,7 +65,8 @@ var fight = function(enemy) {
       } else {
         window.alert(enemy.name + ' still has ' + enemy.health + ' health left.');
       }
-  
+  // player gets attacked first
+} else {
       // remove players's health by subtracting the amount set in the enemyAttack variable
       var damage = randomNumber(enemy.attack - 3, enemy.attack);
       playerInfo.health = Math.max(0, playerInfo.health - damage);
@@ -68,12 +78,14 @@ var fight = function(enemy) {
       if (playerInfo.health <= 0) {
         window.alert(playerInfo.name + ' has died!');
         // leave while() loop if player is dead
-        debugger;
         break;
       } else {
         window.alert(playerInfo.name + ' still has ' + playerInfo.health + ' health left.');
       }
     }
+    //switch turn
+    isPlayerTurn = !isPlayerTurn;
+  }
   };
 // fight();
 // function to start a new game
